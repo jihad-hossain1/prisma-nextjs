@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import prisma from "@/prisma";
 
-export async function GET(request) {
+export async function GET(request: NextRequest) {
   try {
     const users = await prisma.user.findMany();
 
@@ -11,7 +11,7 @@ export async function GET(request) {
   }
 }
 
-export async function POST(req) {
+export async function POST(req: NextRequest) {
   try {
     const dataFromBody = await req.json();
     console.log(dataFromBody);

@@ -1,7 +1,10 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma";
 
-export async function GET(req, { params }) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   //
   const { id } = params;
   console.log(id);
@@ -24,7 +27,7 @@ export async function GET(req, { params }) {
       );
     }
     //
-  } catch (error) {
+  } catch (error: any) {
     //
     return NextResponse.json({ error: error }, { status: 500 });
   }
