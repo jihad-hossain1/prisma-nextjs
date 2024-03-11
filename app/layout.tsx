@@ -1,7 +1,8 @@
 import React from "react";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
+import Footer from "../components/footer/Footer";
+import Navbar from "../components/navbar/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,13 +19,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="flex flex-col justify-between bg-zinc-800 text-white">
-          <nav className="flex items-center gap-10 justify-center">
-            <Link href={"/"}>Home</Link>
-            <Link href={"/"}>Login</Link>
-          </nav>
-          <div className="min-h-screen max-w-screen-xl mx-auto">{children}</div>
-          <footer>This an footer ..</footer>
+        <main className=" bg-zinc-800 text-white">
+          <Navbar />
+          <div className="min-h-screen max-w-screen-xl mx-auto px-5">
+            {children}
+          </div>
+          <Footer />
         </main>
       </body>
     </html>
