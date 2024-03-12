@@ -3,9 +3,13 @@
 import React, { useState, ChangeEvent, FormEventHandler } from "react";
 import { FaUser, FaUserLock } from "react-icons/fa";
 import Modal from "../../modal/Modal";
+import { useRouter } from "next/navigation";
+
 const AddPost = () => {
+  const router = useRouter();
+
   const user = {
-    id: "",
+    id: "cltnp73j10000dzxrapq4ozml",
   };
   const [openModal, setOpenModal] = useState(false);
 
@@ -28,13 +32,38 @@ const AddPost = () => {
   const handlesubmit = async (e: any) => {
     e.preventDefault();
 
-    console.log(formdata);
+    console.log({
+      userId: user.id,
+      slug: formdata.slug,
+      body: formdata.body,
+      title: formdata.title,
+    });
 
     if (!user) {
       return alert("user must be required");
     }
 
-    const res = await fetch("http://localhost:3000/api/v1/posts", {});
+    try {
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: user.id,
+          slug: formdata.slug,
+          body: formdata.body,
+          title: formdata.title,
+        }),
+      };
+      const res = await fetch(`/api/v1/posts`, requestOptions);
+      console.log(res);
+      if (res?.status == 201) {
+        router.refresh();
+        // alert("post create successfull");
+        setOpenModal(false);
+      }
+    } catch (error: any) {
+      console.log(error);
+    }
   };
   return (
     <>
