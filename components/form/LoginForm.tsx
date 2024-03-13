@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { ChangeEvent, useState } from "react";
+import { signIn } from "next-auth/react";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -30,25 +31,26 @@ const LoginForm = () => {
     });
 
     try {
-      const requestOptions = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formdata,
-        }),
-      };
-      const res = await fetch(`/api/v1/posts`, requestOptions);
+      const res = await signIn("credentials", {
+        email: formdata.email,
+        password: formdata.password,
+        redirect: false,
+      });
       console.log(res);
-      if (res?.status == 201) {
-        router.refresh();
-        alert("register successfull");
+      if (!res?.ok) {
+        // console.log(res);
+        console.log(res?.error);
+      }
+      if (res?.ok) {
+        alert("LOGIN SUCCESSFULL");
+        router.push("/");
       }
     } catch (error: any) {
       console.log(error);
     }
   };
   return (
-    <div className="max-w-xl mx-auto">
+    <div className="max-w-xl mx-auto pt-20">
       <form onSubmit={handlesubmit} className="flex flex-col gap-4">
         <input
           onChange={handleChange}
@@ -69,7 +71,7 @@ const LoginForm = () => {
           id=""
         />
         <button
-          className="w-full bg-violet-700 hover:bg-violet-700/90"
+          className="w-full bg-violet-700 hover:bg-violet-700/90 p-3 rounded-md"
           type="submit"
         >
           login

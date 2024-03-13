@@ -4,13 +4,16 @@ import React, { useState, ChangeEvent, FormEventHandler } from "react";
 import { FaUser, FaUserLock } from "react-icons/fa";
 import Modal from "../../modal/Modal";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const AddPost = () => {
+  const { status, data: session } = useSession();
   const router = useRouter();
 
-  const user = {
-    id: "cltnp73j10000dzxrapq4ozml",
-  };
+  // console.log();
+
+  const userId = session?.user?.id;
+
   const [openModal, setOpenModal] = useState(false);
 
   const [formdata, setformdata] = useState({
@@ -33,13 +36,13 @@ const AddPost = () => {
     e.preventDefault();
 
     console.log({
-      userId: user.id,
+      userId: userId,
       slug: formdata.slug,
       body: formdata.body,
       title: formdata.title,
     });
 
-    if (!user) {
+    if (!session?.user) {
       return alert("user must be required");
     }
 
@@ -48,7 +51,7 @@ const AddPost = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          userId: user.id,
+          userId: userId,
           slug: formdata.slug,
           body: formdata.body,
           title: formdata.title,
@@ -67,12 +70,14 @@ const AddPost = () => {
   };
   return (
     <>
-      <button
-        onClick={() => setOpenModal(true)}
-        className="bg-violet-800 rounded shadow px-3 py-1 my-4"
-      >
-        post +
-      </button>
+      {status === "authenticated" && (
+        <button
+          onClick={() => setOpenModal(true)}
+          className="bg-violet-800 rounded shadow px-3 py-1 my-4"
+        >
+          post +
+        </button>
+      )}
 
       <Modal
         openModal={openModal}

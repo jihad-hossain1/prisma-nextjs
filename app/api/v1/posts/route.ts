@@ -4,7 +4,7 @@ import prisma from "../../../../prisma";
 export async function POST(req: NextRequest) {
   try {
     const { title, slug, userId, body } = await req.json();
-console.log({ title, slug, userId, body });
+
 if (
   !title ||
   (title == "" && !slug) ||
@@ -19,6 +19,8 @@ if (
 }
 
     const isUser = await prisma.user.findUnique({ where: { id: userId } });
+    console.log(isUser);
+    
 
     if (!isUser) {
       return NextResponse.json(

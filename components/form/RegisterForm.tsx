@@ -25,12 +25,6 @@ const RegisterForm = () => {
   const handlesubmit = async (e: any) => {
     e.preventDefault();
 
-    console.log({
-      name: formdata.name,
-      email: formdata.email,
-      password: formdata.password,
-    });
-
     try {
       const requestOptions = {
         method: "POST",
@@ -39,7 +33,7 @@ const RegisterForm = () => {
           ...formdata,
         }),
       };
-      const res = await fetch(`/api/v1/posts`, requestOptions);
+      const res = await fetch(`/api/v1/users`, requestOptions);
       console.log(res);
       if (res?.status == 201) {
         router.refresh();
@@ -50,7 +44,7 @@ const RegisterForm = () => {
     }
   };
   return (
-    <div className="max-w-xl mx-auto">
+    <div className="max-w-xl mx-auto pt-20">
       <form onSubmit={handlesubmit} className="flex flex-col gap-4">
         <input
           onChange={handleChange}
@@ -80,7 +74,7 @@ const RegisterForm = () => {
           id=""
         />
         <button
-          className="w-full bg-violet-700 hover:bg-violet-700/90"
+          className="w-full bg-violet-700 hover:bg-violet-700/90 p-3 rounded-md"
           type="submit"
         >
           register
