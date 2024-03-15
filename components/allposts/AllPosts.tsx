@@ -1,30 +1,24 @@
 import React from "react";
 import AddPost from "./actions/AddPost";
+import SinglePost from "./SinglePost";
+import { Props } from "../../utils/types";
+import { Post } from "@prisma/client";
 
-interface Post {
-  title: string;
-  slug: string;
-  id: string;
-  body: string;
-}
-
-const AllPosts = ({ posts }) => {
+const AllPosts: React.FC<Props> = ({ posts }) => {
   return (
     <main className="pt-20">
       <AddPost />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-7 lg:gap-9">
         {posts?.map((post: Post) => (
-          <main
-            key={post?.id}
-            className="border border-gray-600 rounded-lg shadow p-4 flex flex-col items-center"
-          >
-            <h4 className="text-sm">{post?.title}</h4>
-            <p className="text-xs">{post?.body}</p>
-          </main>
+          <SinglePost key={post?.id} post={post} />
         ))}
       </div>
     </main>
   );
 };
+
+
+
+
 
 export default AllPosts;

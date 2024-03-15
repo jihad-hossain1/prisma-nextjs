@@ -3,7 +3,7 @@ import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "../../../../prisma";
 import bcrypt from "bcrypt";
-import { use } from "react";
+
 
 export const options: NextAuthOptions = {
   providers: [

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import React, { ChangeEvent, useState } from "react";
 import { signIn } from "next-auth/react";
 
-const LoginForm = () => {
+const LoginForm: React.FC = () => {
   const router = useRouter();
 
   const [formdata, setformdata] = useState({
