@@ -4,6 +4,27 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "../../../../prisma";
 import bcrypt from "bcrypt";
 
+enum Role {
+  Admin = "ADMIN",
+  User = "USER",
+  // Add other roles as needed
+}
+
+declare module "next-auth" {
+  interface User {
+    role: Role;
+  }
+}
+
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+      role: Role;
+      // Include other properties as needed
+    };
+  }
+}
 
 export const options: NextAuthOptions = {
   providers: [
@@ -56,15 +77,22 @@ export const options: NextAuthOptions = {
 
   callbacks: {
     async jwt({ token, user }) {
-      // console.log("user from jwt", user);
-      if (user) token.role = user.role;
+      if (user) {
+        // Use a type guard to check if the 'role' property exists on 'user'
+        const role = "role" in user ? user.role : "defaultRole";
+        token.role = role;
+      }
       return token;
     },
 
     async session({ session, token }) {
-      // console.log("token from sesson", token);
-      if (session?.user) session.user.role = token.role;
-      if (session?.user) session.user.id = token.sub;
+      if (session?.user) {
+        // Ensure 'role' is of type 'Role' by casting it
+        const role =
+          "role" in token ? (token.role as Role) : ("defaultRole" as Role);
+        session.user.role = role;
+        session.user.id = token?.sub;
+      }
       return session;
     },
   },
