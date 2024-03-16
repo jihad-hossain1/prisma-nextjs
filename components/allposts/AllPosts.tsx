@@ -1,8 +1,10 @@
 import React from "react";
 import AddPost from "./actions/AddPost";
 import SinglePost from "./SinglePost";
-import { Props } from "../../utils/types";
-import { Post } from "@prisma/client";
+import { Post, Props } from "../../utils/types";
+// import { Post } from "@prisma/client";
+
+
 
 const AllPosts: React.FC<Props> = ({ posts }) => {
   return (
