@@ -34,3 +34,42 @@ export async function GET(
     return NextResponse.json({ error }, { status: 500 });
   }
 }
+
+export async function PUT(request: NextRequest, { params }) {
+  const id = params.id;
+  try {
+    const { title, body } = await request.json();
+
+    // check id valid
+    if (!id || id == "" || id == null || id == 0) {
+      return NextResponse.json(
+        { message: "post id is required" },
+        { status: 400 }
+      );
+    }
+
+    if (title == "" || !title) {
+      return NextResponse.json({ message: "title is empty" }, { status: 400 });
+    } else if (body == "" || !body) {
+      return NextResponse.json(
+        { message: "content is empty" },
+        { status: 400 }
+      );
+    }
+
+    const updatePost = await prisma.post.update({
+      where: { id },
+      data: {
+        title,
+        body,
+      },
+    });
+
+    return NextResponse.json(
+      { message: "Post updated successfull.", updatePost },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json({ error }, { status: 500 });
+  }
+}

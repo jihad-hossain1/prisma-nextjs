@@ -11,9 +11,6 @@ const Update: React.FC<SinglePostProps> = ({ post }) => {
   const { status, data: session } = useSession();
   const router = useRouter();
 
-  // console.log();
-
-  const userId = session?.user?.id;
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -40,16 +37,16 @@ const Update: React.FC<SinglePostProps> = ({ post }) => {
 
     try {
       const requestOptions = {
-        method: "POST",
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           body: formdata.body,
           title: formdata.title,
         }),
       };
-      const res = await fetch(`/api/v1/posts?id=${post?.id}`, requestOptions);
+      const res = await fetch(`/api/v1/posts/${post?.id}`, requestOptions);
       console.log(res);
-      if (res?.status == 201) {
+      if (res?.status == 200) {
         router.refresh();
         // alert("post create successfull");
         setOpenModal(false);
