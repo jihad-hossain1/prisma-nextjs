@@ -12,6 +12,7 @@ const LoginForm: React.FC = () => {
     email: "",
     password: "",
   });
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name;
     const value = e.target.value;
