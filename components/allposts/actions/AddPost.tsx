@@ -35,13 +35,6 @@ const AddPost = () => {
   const handlesubmit = async (e: any) => {
     e.preventDefault();
 
-    console.log({
-      userId: userId,
-      slug: formdata.slug,
-      body: formdata.body,
-      title: formdata.title,
-    });
-
     if (!session?.user) {
       return alert("user must be required");
     }
@@ -57,11 +50,11 @@ const AddPost = () => {
           title: formdata.title,
         }),
       };
+
       const res = await fetch(`/api/v1/posts`, requestOptions);
-      console.log(res);
+
       if (res?.status == 201) {
         router.refresh();
-        // alert("post create successfull");
         setOpenModal(false);
       }
     } catch (error: any) {

@@ -73,3 +73,38 @@ export async function PUT(request: NextRequest, { params }) {
     return NextResponse.json({ error }, { status: 500 });
   }
 }
+
+export async function DELETE(request: NextRequest, { params }) {
+  const id = params.id;
+
+  try {
+    const { userId } = await request.json();
+
+    // check id valid
+    if (!id || id == "" || id == null || id == 0) {
+      return NextResponse.json(
+        { message: "post id is required" },
+        { status: 400 }
+      );
+    }
+
+    const findPost = await prisma.post.findFirst({
+      where: { id },
+    });
+
+    if (findPost?.userId !== userId) {
+      return NextResponse.json(
+        { message: "user are not same" },
+        { status: 400 }
+      );
+    }
+
+    await prisma.post.delete({
+      where: { id },
+    });
+
+    return NextResponse.json({ message: "post is deleted" }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ error }, { status: 500 });
+  }
+}

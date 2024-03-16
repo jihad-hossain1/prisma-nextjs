@@ -58,10 +58,10 @@ const Update: React.FC<SinglePostProps> = ({ post }) => {
   return (
     <>
       {" "}
-      {session?.user?.id == post?.userId && (
+      {status === "authenticated" && session?.user?.id == post?.userId && (
         <button
           onClick={() => setOpenModal(true)}
-          className="bg-violet-800 rounded shadow px-3 py-1 my-4"
+          className="bg-violet-800 rounded shadow px-2 py-1 my-4 w-full"
         >
           update
         </button>
