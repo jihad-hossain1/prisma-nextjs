@@ -40,7 +40,7 @@ const DeletePost: React.FC<Props> = ({ id, userId }) => {
       {status === "authenticated" && session?.user?.id == userId && (
         <button
           onClick={handleDelete}
-          className="bg-red-500 text-zinc-50 w-full px-2 py-1 rounded-md shadow-sm text-sm"
+          className="bg-red-500 text-zinc-50 w-full px-2 py-1 rounded-md shadow-sm text-xs"
         >
           Delete
         </button>

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { useEffect, useRef, useState } from "react";
@@ -52,7 +51,7 @@ function Account() {
         {status === "authenticated" ? (
           <>
             <li>
-              <Link href={"#"} className=" py-1 px-5">
+              <Link href={"/user-profile"} className=" py-1 px-5">
                 Profile
               </Link>
             </li>

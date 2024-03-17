@@ -12,3 +12,12 @@ export interface Props {
 export interface SinglePostProps {
   post: Post;
 }
+
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  password: string;
+  posts: Post[];
+  role: string;
+}

@@ -8,7 +8,7 @@ const SinglePost: React.FC<SinglePostProps> = ({ post }: { post: Post }) => {
     <main className="group relative border border-gray-600 rounded-lg shadow p-4 flex flex-col items-center">
       <h4 className="text-sm">{post?.title}</h4>
       <p className="text-xs">{post?.body}</p>
-      <div className="absolute  z-50 hidden group-hover:flex items-center gap-2 ">
+      <div className="absolute  z-50 hidden group-hover:flex items-center ">
         <Update post={post} />
         <DeletePost id={post?.id} userId={post?.userId} />
       </div>
