@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 import { useEffect, useRef, useState } from "react";
 import { useSession, signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   return (
@@ -22,7 +23,6 @@ function Account() {
   const { data: session, status } = useSession();
   const [open, setOpen] = useState(false);
   const dropDownRef = useRef(null);
-  const items = ["Profile", "Dashboard", "Settings", "Log Out"];
 
   useEffect(() => {
     const close = (e: { target: any }) => {
@@ -69,6 +69,14 @@ function Account() {
             <li>
               <Link href={"/login"} className="py-1 px-5 text-nowrap">
                 Login
+              </Link>
+            </li>
+            <li>
+              <Link
+                href={"/login/admin/admin-register"}
+                className="py-1 px-5 text-nowrap"
+              >
+                Admin Login
               </Link>
             </li>
           </>
