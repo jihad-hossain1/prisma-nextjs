@@ -1,12 +1,17 @@
+'use client'
+
 import React from "react";
 import AddPost from "./actions/AddPost";
 import SinglePost from "./SinglePost";
 import { Post, Props } from "../../utils/types";
-// import { Post } from "@prisma/client";
+import { useSession } from "next-auth/react";
+
 
 
 
 const AllPosts: React.FC<Props> = ({ posts }) => {
+  const { data } = useSession();
+  console.log(data)
   return (
     <main className="pt-20">
       <AddPost />

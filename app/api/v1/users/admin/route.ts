@@ -16,15 +16,15 @@ export async function POST(req: NextRequest) {
   try {
     const dataFromBody = await req.json();
     console.log(dataFromBody);
-    const { name, mobile, password } = dataFromBody;
+    const { name, aemail, password } = dataFromBody;
 
-    if (name === "" && mobile === "" && password === "") {
+    if (name === "" && aemail === "" && password === "") {
       return NextResponse.json({
-        message: "name mobile & password are required",
+        message: "name aemail & password are required",
       });
     }
 
-    const alreadyUser = await prisma.admin.findFirst({ where: { mobile } });
+    const alreadyUser = await prisma.admin.findFirst({ where: { aemail } });
     if (alreadyUser) {
       return NextResponse.json(
         { message: "admin already exist" },
@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
     const user = await prisma.admin.create({
       data: {
         name,
-        mobile,
+        aemail,
         password: hashedPassword,
       },
     });

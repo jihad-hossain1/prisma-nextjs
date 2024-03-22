@@ -3,7 +3,7 @@ import AllPosts from "../../components/allposts/AllPosts";
 
 async function getData() {
   const res = await fetch(
-    "https://prisma-nextjs-theta.vercel.app/api/v1/posts",
+    `${process.env.URL}/posts`,
     {
       cache: "no-store",
     }
