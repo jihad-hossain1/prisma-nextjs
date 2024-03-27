@@ -15,6 +15,8 @@ declare module "next-auth" {
   interface User {
     role: Role;
     id: string;
+    aid: string;
+    aemail: string;
   }
 }
 
@@ -26,6 +28,8 @@ declare module "next-auth" {
       email: string;
       name: string;
       password: string;
+      aid: string;
+      aemail: string;
       // Include other properties as needed
     };
   }
@@ -34,6 +38,8 @@ declare module "next-auth" {
 declare module "next-auth/jwt" {
   interface JWT {
     id?: string;
+    aid?: string;
+    aemail?: string;
   }
 }
 
@@ -47,19 +53,48 @@ export const options: NextAuthOptions = {
           type: "email",
           placeholder: "your-email",
         },
+        aemail: {
+          label: "admin-email:",
+          type: "email",
+          placeholder: "your-email",
+        },
         password: {
           label: "password:",
           type: "password",
           placeholder: "your-password",
         },
+        for: {
+          label: 'for',
+          type: 'text'
+        }
+
       },
 
       async authorize(
-        credentials: { email: string; password: string },
+        credentials: { email: string; password: string, aemail: string, for: string },
         req: NextRequest
       ) {
-        const { email, password } = credentials;
+        const { email, password, aemail } = credentials;
         console.log(credentials);
+        if (credentials.for == 'admin') {
+          const auser = await prisma.admin.findFirst({ where: { aemail: aemail } })
+          if (!aemail) {
+            return Promise.resolve(null)
+          }
+
+          const passwordValid = await bcrypt.compare(password, auser.password);
+
+          if (!passwordValid) {
+            return Promise.resolve(null)
+          }
+
+          return Promise.resolve({
+            aid: auser.id,
+            aemail: auser.aemail,
+            name: auser.name,
+            role: auser.role
+          })
+        }
         try {
           const foundUser = await prisma.user.findFirst({
             where: { email },
@@ -94,6 +129,8 @@ export const options: NextAuthOptions = {
         const role = "role" in user ? user.role : "defaultRole";
         token.role = role;
         token.id = user?.id;
+        token.aemail = user.aemail;
+        token.aid = user.aid
       }
       return token;
     },
@@ -105,6 +142,8 @@ export const options: NextAuthOptions = {
           "role" in token ? (token.role as Role) : ("defaultRole" as Role);
         session.user.role = role;
         session.user.id = token?.id;
+        session.user.aemail = token.aemail;
+        session.user.aid = token.aid;
       }
       return session;
     },

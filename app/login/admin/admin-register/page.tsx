@@ -8,7 +8,7 @@ const AdminRegisterpage = () => {
 
   const [formdata, setformdata] = useState({
     name: "",
-    mobile: "",
+    aemail: "",
     password: "",
   });
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +44,7 @@ const AdminRegisterpage = () => {
   };
 
   const handleLogin = () => {
-    router.push("/api/auth/signin");
+    router.push("/login/admin");
   };
   return (
     <div className="max-w-xl mx-auto pt-20">
@@ -60,10 +60,10 @@ const AdminRegisterpage = () => {
         />
         <input
           onChange={handleChange}
-          value={formdata.mobile}
+          value={formdata.aemail}
           type="text"
-          name="mobile"
-          placeholder="mobile"
+          name="aemail"
+          placeholder="admin email"
           className="border bg-transparent p-3"
           id=""
         />
