@@ -2,12 +2,9 @@ import React from "react";
 import AllPosts from "../../components/allposts/AllPosts";
 
 async function getData() {
-  const res = await fetch(
-    "https://prisma-nextjs-theta.vercel.app/api/v1/posts",
-    {
-      cache: "no-store",
-    }
-  );
+  const res = await fetch(`${process.env.URL}/api/v1/posts`, {
+    next: { tags: ["posts"] },
+  });
 
   if (!res.ok) {
     throw new Error("Failed to fetch data");

@@ -5,10 +5,12 @@ import { FaUser, FaUserLock } from "react-icons/fa";
 import Modal from "../../modal/Modal";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { customRevidateTag } from "../../../utils/revalidTags";
 
 const AddPost = () => {
   const { status, data: session } = useSession();
   const router = useRouter();
+  const [errors, seterrors] = useState(null);
 
   // console.log();
 
@@ -53,8 +55,20 @@ const AddPost = () => {
 
       const res = await fetch(`/api/v1/posts`, requestOptions);
 
+      const response = await res.json();
+
+      if (!res.ok) {
+        seterrors(response?.message);
+      }
+
       if (res?.status == 201) {
-        router.refresh();
+        setformdata({
+          title: "",
+          body: "",
+          slug: "",
+        });
+        // router.refresh();
+        customRevidateTag("posts");
         setOpenModal(false);
       }
     } catch (error: any) {
