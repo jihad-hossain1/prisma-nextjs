@@ -21,3 +21,10 @@ export interface User {
   posts: Post[];
   role: string;
 }
+
+export type BlogData = {
+  [x: string]: any;
+  id: string;
+  email: string;
+  content: string;
+};

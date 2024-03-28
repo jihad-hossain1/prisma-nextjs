@@ -43,3 +43,9 @@ model Post {
   userId String
   author User   @relation(fields: [userId], references: [id])
 }
+
+model Blog {
+  id String @id @default(cuid())
+  email String 
+  content String @db.VarChar(500)
+}
