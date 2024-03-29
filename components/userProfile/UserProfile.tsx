@@ -5,6 +5,7 @@ import Link from "next/link";
 import React from "react";
 import { Post, User } from "../../utils/types";
 import SinglePost from "../allposts/SinglePost";
+import SelectMenu from "./SelectMenu";
 
 interface UserProfileProps {
   userData: User;
@@ -39,6 +40,10 @@ const UserProfile: React.FC<UserProfileProps> = ({ userData }) => {
                 <SinglePost key={post?.id} post={post} />
               ))}
             </div>
+          </div>
+
+          <div>
+            <SelectMenu />
           </div>
         </>
       )}

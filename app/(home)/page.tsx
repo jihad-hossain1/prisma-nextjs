@@ -12,7 +12,7 @@ const Homepage = async () => {
   // const posts = [];
   return (
     <>
-      <div>
+      <div className="flex items-center gap-3">
         <Link href={"/add-blog"}>Add Blog</Link>
         <AddPost />
       </div>

@@ -39,7 +39,7 @@ model Post {
   id     String @id @default(cuid())
   slug   String
   title  String
-  body   String
+  body   String @db.VarChar(700)
   userId String
   author User   @relation(fields: [userId], references: [id])
 }

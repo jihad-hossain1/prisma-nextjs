@@ -28,3 +28,13 @@ export type BlogData = {
   email: string;
   content: string;
 };
+
+export interface Item {
+  id: number;
+  name: string;
+};
+export interface SubItem {
+  id: number;
+  name: string;
+  catId: number;
+};

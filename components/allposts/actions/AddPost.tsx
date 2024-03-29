@@ -16,15 +16,15 @@ const AddPost = () => {
 
   const userId = session?.user?.id;
 
-  const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
-  const [formdata, setformdata] = useState({
+  const [formdata, setformdata] = useState<{ title: string; slug: string }>({
     title: "",
-    body: "",
     slug: "",
   });
+  const [body, setBody] = useState<string>("");
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const name = e.target.name;
     const value = e.target.value;
 
@@ -48,7 +48,7 @@ const AddPost = () => {
         body: JSON.stringify({
           userId: userId,
           slug: formdata.slug,
-          body: formdata.body,
+          body: body,
           title: formdata.title,
         }),
       };
@@ -64,9 +64,9 @@ const AddPost = () => {
       if (res?.status == 201) {
         setformdata({
           title: "",
-          body: "",
           slug: "",
         });
+        setBody("");
         // router.refresh();
         customRevidateTag("posts");
         setOpenModal(false);
@@ -92,6 +92,7 @@ const AddPost = () => {
         title={"Create a Post"}
       >
         <form className="p-12" onSubmit={handlesubmit}>
+          {errors && <p>{errors}</p>}
           <div className="space-y-5">
             <div className="relative">
               <input
@@ -108,18 +109,14 @@ const AddPost = () => {
               </span>
             </div>
             <div className="relative">
-              <input
-                onChange={handleChange}
-                value={formdata.body}
+              <textarea
+                onChange={(e) => setBody(e.target.value)}
+                value={body}
                 id="content"
-                type="text"
                 name="body"
                 placeholder="Content"
-                className="p-3 block w-full pl-10 drop-shadow-lg rounded-lg outline-none  bg-transparent text-gray-50 border border-violet-400"
+                className="min-h-[200px] p-3 block w-full drop-shadow-lg rounded-lg outline-none  bg-transparent text-gray-50 border border-violet-400"
               />
-              <span className="absolute top-1/4 left-2">
-                <FaUser className="text-gray-500" size={23} />
-              </span>
             </div>
 
             <div className="relative">
