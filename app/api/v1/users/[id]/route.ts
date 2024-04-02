@@ -15,11 +15,35 @@ export async function GET(
       where: { id },
 
       //
-      select: { id: true, name: true, email: true, posts: true },
+      select: { id: true, name: true, email: true, },
     });
 
     if (user) {
-      return NextResponse.json(user);
+
+      return NextResponse.json({
+        user, menu: [
+          {
+            menu: 'sliceone'
+          },
+          {
+            menu: 'slicetwo'
+          },
+          {
+            menu: 'slicethree',
+            subMenu: {
+              sub: 'slicethree',
+              submenus: [
+                {
+                  menu: 'menu-one'
+                },
+                {
+                  menu: 'menu-two'
+                },
+              ]
+            }
+          },
+        ]
+      });
     } else {
       return NextResponse.json(
         { message: "user are not found" },

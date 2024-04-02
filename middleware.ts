@@ -1,8 +1,19 @@
 import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
+import { getUser } from "./utils/fetchUsers";
 
 export default withAuth(
-  function middleware(req) {
+
+  async function middleware(req) {
+    // console.log('user info from db: ', req.nextauth.token.id);
+
+    const id = req.nextauth.token.id;
+
+    const user = await getUser(id);
+
+
+    console.log('response from middleware', user.menue);
+
     if (
       req.nextUrl.pathname.startsWith("/dashboard") &&
       req.nextauth.token.role != "admin"
