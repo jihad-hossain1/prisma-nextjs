@@ -6,10 +6,14 @@ import { BlogData } from "../../utils/types";
 import AddPost from "../../components/allposts/actions/AddPost";
 import Link from "next/link";
 
+
 const Homepage = async () => {
+
   const posts = await getData();
   const blogs = await getBlogs();
-  // const posts = [];
+
+
+
   return (
     <>
       <div className="flex items-center gap-3">

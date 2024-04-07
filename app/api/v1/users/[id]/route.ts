@@ -7,7 +7,6 @@ export async function GET(
 ) {
   //
   const { id } = params;
-  console.log(id);
   //
   try {
     const user = await prisma.user.findUnique({
@@ -15,34 +14,32 @@ export async function GET(
       where: { id },
 
       //
-      select: { id: true, name: true, email: true, },
+      select: { id: true, name: true, email: true, role: true },
     });
 
     if (user) {
-
       return NextResponse.json({
-        user, menu: [
+        user,
+        paths: [
+          // {
+          //   path: "path-one",
+          //   name: "Path One",
+          // },
           {
-            menu: 'sliceone'
+            path: "/affiliate/path-two",
+            name: "Path Two",
+            subPath: [
+              {
+                path: "menu-one",
+                name: "Menu One",
+              },
+              {
+                path: "menu-two",
+                name: "Slice Two",
+              },
+            ],
           },
-          {
-            menu: 'slicetwo'
-          },
-          {
-            menu: 'slicethree',
-            subMenu: {
-              sub: 'slicethree',
-              submenus: [
-                {
-                  menu: 'menu-one'
-                },
-                {
-                  menu: 'menu-two'
-                },
-              ]
-            }
-          },
-        ]
+        ],
       });
     } else {
       return NextResponse.json(
