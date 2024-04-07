@@ -3,6 +3,7 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { customRevidateTag } from "../../../utils/revalidTags";
 
 interface Props {
   userId: string;
@@ -30,9 +31,15 @@ const DeletePost: React.FC<Props> = ({ id, userId }) => {
       }
 
       alert("post delete done");
+
+      customRevidateTag('posts')
+
       router.refresh();
+
     } catch (error: any) {
+
       console.log(error);
+      
     }
   };
   return (

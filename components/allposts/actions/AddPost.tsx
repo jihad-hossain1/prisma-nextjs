@@ -67,12 +67,18 @@ const AddPost = () => {
           slug: "",
         });
         setBody("");
-        // router.refresh();
+
+        router.refresh();
+
         customRevidateTag("posts");
+
         setOpenModal(false);
+
       }
     } catch (error: any) {
+
       console.log(error);
+      
     }
   };
   return (

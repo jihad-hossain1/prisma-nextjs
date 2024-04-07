@@ -63,12 +63,12 @@ export const options: NextAuthOptions = {
 
         try {
           const foundUser = await prisma.admin.findFirst({
-            where: { mobile },
+            where: { aemail: mobile },
           });
           console.log(foundUser);
           const xuser = {
             id: foundUser?.id,
-            mobile: foundUser?.mobile,
+            mobile: foundUser?.aemail,
             name: foundUser.name,
             xrole: foundUser?.role,
           };

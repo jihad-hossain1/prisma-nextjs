@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { FaUser, FaUserLock } from "react-icons/fa";
 import Modal from "../../modal/Modal";
 import { SinglePostProps } from "../../../utils/types";
+import { customRevidateTag } from "../../../utils/revalidTags";
 
 const Update: React.FC<SinglePostProps> = ({ post }) => {
   const { status, data: session } = useSession();
@@ -31,27 +32,39 @@ const Update: React.FC<SinglePostProps> = ({ post }) => {
 
   const handlesubmit = async (e: any) => {
     e.preventDefault();
+
     if (!session?.user) {
+
       return alert("user must be required");
+
     }
 
     try {
       const requestOptions = {
+
         method: "PUT",
         headers: { "Content-Type": "application/json" },
+
         body: JSON.stringify({
           body: formdata.body,
           title: formdata.title,
         }),
       };
+
       const res = await fetch(`/api/v1/posts/${post?.id}`, requestOptions);
-      console.log(res);
+
+
       if (res?.status == 200) {
-        router.refresh();
-        // alert("post create successfull");
+
+        router.refresh(); 
+
+        customRevidateTag('posts')
+
         setOpenModal(false);
+
       }
     } catch (error: any) {
+      
       console.log(error);
     }
   };
